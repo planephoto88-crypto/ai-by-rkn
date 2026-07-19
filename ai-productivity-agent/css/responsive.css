@@ -1,0 +1,118 @@
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+/* Large Tablets / Small Desktops */
+@media (max-width: 1200px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Tablets */
+@media (max-width: 900px) {
+  :root {
+    --sidebar-width: 240px;
+  }
+  
+  .grid-2, .grid-3, .grid-4 {
+    grid-template-columns: 1fr;
+  }
+  
+  .top-bar-center {
+    max-width: 300px;
+  }
+  
+  .page-content {
+    padding: var(--space-md);
+  }
+}
+
+/* Mobile landscape / small tablets */
+@media (max-width: 768px) {
+  :root {
+    --topbar-height: 56px;
+  }
+  
+  .sidebar {
+    position: fixed;
+    left: -100%;
+    z-index: var(--z-sidebar);
+    transition: left var(--transition-normal);
+    width: var(--sidebar-width);
+  }
+  .sidebar.mobile-open {
+    left: 0;
+  }
+  
+  .sidebar.collapsed {
+    width: var(--sidebar-width);
+  }
+  .sidebar.collapsed .logo-text,
+  .sidebar.collapsed .nav-item span,
+  .sidebar.collapsed .agent-status span {
+    display: block;
+  }
+  .sidebar.collapsed .nav-item {
+    justify-content: flex-start;
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  .top-bar-center {
+    display: none;
+  }
+  
+  .modal-content {
+    width: 95%;
+    max-height: 90vh;
+  }
+  
+  .chat-input-container {
+    flex-direction: column;
+  }
+  
+  .toast-container {
+    left: var(--space-md);
+    right: var(--space-md);
+  }
+  .toast {
+    min-width: unset;
+    max-width: unset;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  :root {
+    --font-size-4xl: 1.8rem;
+    --font-size-3xl: 1.5rem;
+    --font-size-2xl: 1.3rem;
+  }
+  
+  .page-content {
+    padding: var(--space-sm);
+  }
+  
+  .stat-card .stat-value {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .btn {
+    padding: var(--space-sm) var(--space-md);
+  }
+  
+  .glass-card {
+    padding: var(--space-md);
+  }
+  
+  .tabs {
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: var(--space-sm) var(--space-md);
+    font-size: var(--font-size-xs);
+  }
+  
+  .shortcut-hint {
+    display: none;
+  }
+}

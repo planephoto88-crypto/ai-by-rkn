@@ -1,0 +1,25 @@
+{
+  "name": "ai-productivity-agent",
+  "version": "1.0.0",
+  "description": "Premium AI Productivity Agent with multi-agent system and backend API",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "build": "echo 'Static frontend — no build step needed'"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4",
+    "express-rate-limit": "^7.4.0"
+  },
+  "devDependencies": {},
+  "keywords": ["ai", "productivity", "agent", "gemini", "express"],
+  "license": "MIT"
+}

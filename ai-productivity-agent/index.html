@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Productivity Agent - Your personal AI employee that saves you hours every day">
+  <meta name="theme-color" content="#6c5ce7">
+  <title>AI Productivity Agent</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+  
+  <!-- External dependencies -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" rel="preload" as="script">
+  
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/glassmorphism.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/themes.css">
+</head>
+<body data-theme="dark">
+  
+  <!-- Loading Screen -->
+  <div id="loading-screen" class="loading-screen">
+    <div class="loading-content">
+      <div class="loading-logo">
+        <div class="logo-pulse"></div>
+        <span class="logo-text">AI<span class="accent">Agent</span></span>
+      </div>
+      <div class="loading-bar-container">
+        <div class="loading-bar"></div>
+      </div>
+      <p class="loading-status">Initializing AI agents...</p>
+    </div>
+  </div>
+
+  <!-- Main App Container -->
+  <div id="app-container" class="app-container" style="display:none;">
+    
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar glass-heavy">
+      <div class="sidebar-header">
+        <div class="logo">
+          <div class="logo-icon">⚡</div>
+          <div class="logo-text">AI<span class="accent">Agent</span></div>
+        </div>
+        <button id="sidebar-toggle" class="icon-btn" aria-label="Toggle sidebar">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </div>
+      
+      <nav class="sidebar-nav">
+        <ul class="nav-list">
+          <li class="nav-item active" data-page="dashboard">
+            <i class="fas fa-th-large"></i>
+            <span>Dashboard</span>
+          </li>
+          <li class="nav-item" data-page="research">
+            <i class="fas fa-search"></i>
+            <span>Research</span>
+          </li>
+          <li class="nav-item" data-page="study">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Study</span>
+          </li>
+          <li class="nav-item" data-page="tasks">
+            <i class="fas fa-tasks"></i>
+            <span>Task Automation</span>
+          </li>
+          <li class="nav-item" data-page="projects">
+            <i class="fas fa-project-diagram"></i>
+            <span>Projects</span>
+          </li>
+          <li class="nav-item" data-page="documents">
+            <i class="fas fa-file-alt"></i>
+            <span>Documents</span>
+          </li>
+          <li class="nav-item" data-page="memory">
+            <i class="fas fa-brain"></i>
+            <span>Memory</span>
+          </li>
+          <li class="nav-item" data-page="scanner">
+            <i class="fas fa-qrcode"></i>
+            <span>AI Scanner</span>
+          </li>
+          <li class="nav-item" data-page="email">
+            <i class="fas fa-envelope"></i>
+            <span>AI Email</span>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-section">
+          <div class="agent-status">
+            <span class="status-dot online"></span>
+            <span>All Agents Active</span>
+          </div>
+        </div>
+        <button id="settings-btn" class="icon-btn" aria-label="Settings">
+          <i class="fas fa-cog"></i>
+        </button>
+        <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Bar -->
+      <header class="top-bar glass">
+        <div class="top-bar-left">
+          <button id="mobile-menu-btn" class="icon-btn" aria-label="Menu">
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="breadcrumb">
+            <span id="page-title">Dashboard</span>
+          </div>
+        </div>
+        <div class="top-bar-center">
+          <div class="global-search glass">
+            <i class="fas fa-search"></i>
+            <input type="text" id="global-search-input" placeholder="Search anything... (Ctrl+K)">
+            <kbd class="shortcut-hint">⌘K</kbd>
+          </div>
+        </div>
+        <div class="top-bar-right">
+          <div class="api-status" id="api-status" title="Server Status">
+            <i class="fas fa-server"></i>
+          </div>
+          <div class="notification-bell">
+            <i class="fas fa-bell"></i>
+            <span class="notification-dot" id="notif-dot"></span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Page Content Area -->
+      <div class="page-content" id="page-content">
+        <!-- Pages injected dynamically -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settings-modal" class="modal glass-heavy" style="display:none;">
+    <div class="modal-overlay"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-cog"></i> Settings</h2>
+        <button class="modal-close icon-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="settings-section">
+          <h3>Server Configuration</h3>
+          <p style="color:var(--text-secondary);font-size:var(--font-size-sm);margin-bottom:var(--space-md)">
+            The Gemini API key is managed on the server. Set the <code>GEMINI_API_KEY</code> environment variable on Render.
+          </p>
+          <div id="server-status" class="card" style="padding:var(--space-md);text-align:center">
+            <div class="spinner" style="margin:0 auto"></div>
+            <p style="font-size:var(--font-size-xs);color:var(--text-tertiary);margin-top:var(--space-sm)">Checking server...</p>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3>Appearance</h3>
+          <div class="form-group">
+            <label>Theme</label>
+            <div class="theme-grid" id="theme-grid">
+              <button class="theme-chip active" data-theme-option="dark">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#6c5ce7,#0a0a1a)"></span> Dark
+              </button>
+              <button class="theme-chip" data-theme-option="light">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#6c5ce7,#f5f5ff)"></span> Light
+              </button>
+              <button class="theme-chip" data-theme-option="midnight">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#5c6bc0,#0a0e27)"></span> Midnight
+              </button>
+              <button class="theme-chip" data-theme-option="forest">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#43a047,#0a1a0f)"></span> Forest
+              </button>
+              <button class="theme-chip" data-theme-option="sunset">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#ff7043,#1a0f0a)"></span> Sunset
+              </button>
+              <button class="theme-chip" data-theme-option="purple">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#ab47bc,#130a1f)"></span> Royal
+              </button>
+              <button class="theme-chip" data-theme-option="ocean">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#00bcd4,#061a1e)"></span> Ocean
+              </button>
+              <button class="theme-chip" data-theme-option="rose">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#e91e63,#1a0a10)"></span> Rose
+              </button>
+              <button class="theme-chip" data-theme-option="mono">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#9e9e9e,#0d0d0d)"></span> Mono
+              </button>
+              <button class="theme-chip" data-theme-option="neon">
+                <span class="theme-swatch" style="background:linear-gradient(135deg,#00ff41,#0a0a0a)"></span> Neon
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h3>Data Management</h3>
+          <button id="export-data" class="btn btn-secondary">
+            <i class="fas fa-download"></i> Export All Data
+          </button>
+          <button id="import-data-trigger" class="btn btn-secondary">
+            <i class="fas fa-upload"></i> Import Data
+          </button>
+          <input type="file" id="import-data-input" accept=".json" style="display:none;">
+          <button id="clear-data" class="btn btn-danger">
+            <i class="fas fa-trash"></i> Clear All Data
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Command Palette -->
+  <div id="command-palette" class="modal glass-heavy" style="display:none;">
+    <div class="modal-overlay"></div>
+    <div class="command-palette-content glass-heavy">
+      <div class="command-input-wrapper">
+        <i class="fas fa-terminal"></i>
+        <input type="text" id="command-input" placeholder="Type a command...">
+      </div>
+      <div class="command-results" id="command-results"></div>
+    </div>
+  </div>
+
+  <!-- Hidden file input for paste/image scanning -->
+  <input type="file" id="scan-file-input" accept="image/*,.pdf,.txt,.md,.csv,.json,.html,.css,.js,.py,.java,.cpp,.docx,.pptx,.xlsx" multiple style="display:none;">
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked@11.1.1/marked.min.js"></script>
+  
+  <script src="js/utils/storage.js"></script>
+  <script src="js/utils/helpers.js"></script>
+  <script src="js/utils/api.js"></script>
+  <script src="js/utils/toast.js"></script>
+  <script src="js/utils/chat-history.js"></script>
+  <script src="js/utils/scanner.js"></script>
+  
+  <script src="js/agents/base-agent.js"></script>
+  <script src="js/agents/research-agent.js"></script>
+  <script src="js/agents/study-agent.js"></script>
+  <script src="js/agents/coding-agent.js"></script>
+  <script src="js/agents/planning-agent.js"></script>
+  <script src="js/agents/multi-agent.js"></script>
+  
+  <script src="js/modules/dashboard.js"></script>
+  <script src="js/modules/research.js"></script>
+  <script src="js/modules/study.js"></script>
+  <script src="js/modules/tasks.js"></script>
+  <script src="js/modules/projects.js"></script>
+  <script src="js/modules/documents.js"></script>
+  <script src="js/modules/memory.js"></script>
+  <script src="js/modules/scanner.js"></script>
+  <script src="js/modules/email.js"></script>
+  <script src="js/modules/login.js"></script>
+  
+  <script src="js/app.js"></script>
+</body>
+</html>

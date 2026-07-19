@@ -1,0 +1,16 @@
+# ============================================
+# Render Docker deployment
+# ============================================
+services:
+  - type: web
+    name: ai-agent
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
